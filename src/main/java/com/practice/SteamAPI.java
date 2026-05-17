@@ -60,7 +60,7 @@ public class SteamAPI{
 
         return null;
     }
-    public static JsonNode getGameInfo(String steamId,Integer appID){
+    public static JsonNode getGameAchievments(String steamId, Integer appID){
         String url = BASE_URL+ "ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appID+"&key="+API_KEY+"&steamid="+steamId;
         try {
 
