@@ -14,9 +14,46 @@ public class Parser {
                 data.path("gameextrainfo").asText()
         );
     }
-    public static GameAchievements achievements (JsonNode base){
-return null;
+    public static GameAchievements achievements (JsonNode base)
+    {
+        JsonNode data = base.path("playerstats").path("achievments");
+        List<GameAchievements.Achievement> achievements = new ArrayList<>();
+
+        for(JsonNode a:data)
+        {
+            achievements.add
+                    (
+                    new GameAchievements.Achievement(
+                                    a.path("apiname").asInt(),
+                            a.path("name").asText(),
+                            a.path("description").asText(),
+                            a.path("achieved").asBoolean())
+
+
+            );
+        }
+        return new GameAchievements(achievements);
     }
+    //steamid
+    //64 bit Steam ID to return achievement list for.
+    //appid
+    //The ID for the game you're requesting
+    //l (Optional)
+    //Language. If specified, it will return language data for the requested language.
+
+    //Result data
+    //A list of achievements.
+    //
+    //apiname
+    //The API name of the achievement
+    //achieved
+    //Whether or not the achievement has been completed.
+    //unlocktime
+    //Date when the achievement was unlocked.
+    //name (optional)
+    //Localized achievement name
+    //description (optional)
+    //Localized description of the achievement
 
 
 

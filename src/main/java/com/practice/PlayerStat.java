@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class PlayerStat extends SteamAPI {
+public class PlayerStat {
     private String name,last_seen,game_playing,avatar_link;
     private String current_status = status.get(0);
     private static final Map<Integer,String> status = Map.of(0, "Offline", 1,
