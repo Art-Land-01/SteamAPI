@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AllGamesStat extends SteamAPI {
+import static com.practice.SteamAPI.getGamesInfo;
+
+public class AllGamesStat {
     private String gameName;
     private int timePlayed;
     private Map<String,Integer> allGames = new HashMap<String,Integer>();
