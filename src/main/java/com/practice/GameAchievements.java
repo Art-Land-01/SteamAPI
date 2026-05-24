@@ -3,9 +3,23 @@ package com.practice;
 import java.util.List;
 
 public class GameAchievements{
+
     private int gameID;
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
     private String gameName;
     private List<Achievement> achList;
+
+    public List<Achievement> getAchList() {
+        return achList;
+    }
 
     public GameAchievements(List<Achievement> achList) {
         this.achList = achList;

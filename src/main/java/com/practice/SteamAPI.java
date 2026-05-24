@@ -16,7 +16,7 @@ public class SteamAPI{
 
 
     public static void main(String[] args) {
-        getGamesInfo("76561198145570899");
+      getGameAchievements("76561198145570899",990080);
 
     }
 
@@ -60,14 +60,17 @@ public class SteamAPI{
 
         return null;
     }
-    public static JsonNode getGameAchievments(String steamId, Integer appID){
-        String url = BASE_URL+ "ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appID+"&key="+API_KEY+"&steamid="+steamId;
-        try {
 
-            JsonNode games = mapper.readTree(base(url));
-            return games.path("response").path("games");
+
+    public static JsonNode getGameAchievements(String steamId, Integer appID){
+        String url = BASE_URL+ "ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appID+"&key="+API_KEY+"&steamid="+steamId+"&l=russian";
+        try {
+            return mapper.readTree(base(url));
         }
-        catch (Exception e) {}
+        catch (Exception e) {
+
+        }
         return null;
+
     }
 }

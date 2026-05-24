@@ -64,7 +64,7 @@ public class SteamAPI{
 
         return null;
     }
-    public static JsonNode getGameAchievments(String steamId, Integer appID){
+   // public static JsonNode getGameAchievements(String steamId, Integer appID){
         String url = BASE_URL+ "ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appID+"&key="+API_KEY+"&steamid="+steamId+"&l=russian";
         try {
             CloseableHttpClient client = HttpClientBuilder.create().build();
