@@ -16,8 +16,10 @@ public class Parser {
     }
     public static GameAchievements achievements (JsonNode base)
     {
-        JsonNode data = base.path("playerstats").path("achievments");
+        JsonNode data = base.path("playerstats").path("achievements");
         List<GameAchievements.Achievement> achievements = new ArrayList<>();
+        GameAchievements ass = new GameAchievements(achievements);
+        ass.setGameName(base.path("playerstats").path("gameName").asText());
 
         for(JsonNode a:data)
         {
@@ -32,7 +34,7 @@ public class Parser {
 
             );
         }
-        return new GameAchievements(achievements);
+        return ass;
     }
     //steamid
     //64 bit Steam ID to return achievement list for.
