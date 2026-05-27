@@ -9,7 +9,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.http.HttpResponse;
 
 public class SteamAPI{
-    private static final String API_KEY = "CB76C482937B0AC695B62EBB16D3A64C";
+    private static final String API_KEY = "CB76C482937B0AC695B62EBB16D3A64C";//в конфиг спрятать обязательно
     private static final String BASE_URL = "https://api.steampowered.com/";
     private static final CloseableHttpClient client = HttpClientBuilder.create().build();
     private static final ObjectMapper mapper = new ObjectMapper();
