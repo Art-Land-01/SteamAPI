@@ -36,6 +36,8 @@ public class Parser {
         }
         return ass;
     }
+
+    //в запросе
     //steamid
     //64 bit Steam ID to return achievement list for.
     //appid
@@ -43,9 +45,8 @@ public class Parser {
     //l (Optional)
     //Language. If specified, it will return language data for the requested language.
 
-    //Result data
+    //в ответе
     //A list of achievements.
-    //
     //apiname
     //The API name of the achievement
     //achieved
@@ -56,7 +57,6 @@ public class Parser {
     //Localized achievement name
     //description (optional)
     //Localized description of the achievement
-
 
 
 

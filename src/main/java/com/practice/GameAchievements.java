@@ -26,6 +26,7 @@ public class GameAchievements{
     }
 
 
+    //потом возможно придётся вынести в отдельный, хз когда
     public static class Achievement {
         private String name,description;
         private int achID;
