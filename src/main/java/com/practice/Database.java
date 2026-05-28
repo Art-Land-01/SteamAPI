@@ -1,19 +1,18 @@
 package com.practice;
 
-import org.jdbi.v3.core.Jdbi;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Database {
     private static final String URL = "jdbc:postgresql://localhost:5432/SteamAPI";
-    private static final String USR = "postgres";
-    private static final String PSWRD = "faku228322";
-    private static Jdbi jdbi;
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "faku228322";
 
-    public static Jdbi getJDBI(){
-        if(jdbi==null)
-            jdbi = Jdbi.create(URL,USR,PSWRD);
-        return jdbi;
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
-
-
-
 }
+
+
+

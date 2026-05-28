@@ -14,6 +14,8 @@ public class WorkerBee {
     public PlayerStat getPlayer(String steamID){
         return Parser.account(api.getProfileInfo(steamID));
     }
+
+
     public List<Game> getPlayedGames(String steamID){
         return Parser.gamesOwned(api.getGamesInfo(steamID))
                 .stream()
