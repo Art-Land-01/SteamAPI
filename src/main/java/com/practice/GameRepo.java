@@ -6,7 +6,6 @@ import java.util.List;
 
 public class GameRepo {
 
-    // Добавить игру в отслеживаемые
     public void save(String steamId, Game game) {
         String sql = "INSERT INTO tracked_games (steam_id, app_id, game_name) " +
                 "VALUES (?, ?, ?) " +
@@ -25,7 +24,7 @@ public class GameRepo {
         }
     }
 
-    // Получить все отслеживаемые игры
+
     public List<Game> getTrackedGames(String steamId) {
         String sql = "SELECT app_id, game_name FROM tracked_games WHERE steam_id = ?";
         List<Game> games = new ArrayList<>();
@@ -50,7 +49,6 @@ public class GameRepo {
         return games;
     }
 
-    // Удалить игру из отслеживаемых
     public void delete(String steamId, int appId) {
         String sql = "DELETE FROM tracked_games WHERE steam_id = ? AND app_id = ?";
 
@@ -66,7 +64,6 @@ public class GameRepo {
         }
     }
 
-    // Проверить отслеживается ли игра
     public boolean isTracked(String steamId, int appId) {
         String sql = "SELECT COUNT(*) FROM tracked_games WHERE steam_id = ? AND app_id = ?";
 

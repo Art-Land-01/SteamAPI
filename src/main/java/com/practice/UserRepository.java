@@ -24,7 +24,6 @@ public class UserRepository {
         }
     }
 
-    // Проверить существует ли пользователь
     public boolean exists(String steamId) {
         String sql = "SELECT COUNT(*) FROM users WHERE steam_id = ?";
 
