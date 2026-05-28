@@ -15,19 +15,13 @@ public class SteamAPI{
     private static final ObjectMapper mapper = new ObjectMapper();
 
 
-    public static void main(String[] args) {
-      getGameAchievements("76561198145570899",990080);
-
-    }
-
-
     private static String base(String url) {
         try {
             HttpGet request = new HttpGet(url);
             HttpResponse response = client.execute(request);
             System.out.println("Ответ сервера - " + response.getStatusLine().getStatusCode());
             String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
-            System.out.println(responseBody+"\n"+new Object(){}.getClass().getEnclosingMethod().getName());
+            //System.out.println(responseBody+"\n"+new Object(){}.getClass().getEnclosingMethod().getName());
             return responseBody;
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,7 +35,6 @@ public class SteamAPI{
         try
         {
             return mapper.readTree(base(url));
-            //player.path("response").path("players").get(0); в парсер
         } catch (Exception e) {
             System.out.println("Connection failed");
         }
@@ -54,7 +47,6 @@ public class SteamAPI{
         String url = BASE_URL+"IPlayerService/GetOwnedGames/v0001/?key="+API_KEY+"&steamid="+steamId+"&include_appinfo=true&format=json";
         try {
             return mapper.readTree(base(url));
-            //games.path("response").path("games"); в парсер
         }
         catch (Exception e) {System.out.println("Connection failed");}
 

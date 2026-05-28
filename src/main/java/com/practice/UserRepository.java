@@ -1,48 +1,58 @@
 package com.practice;
 
-import org.jdbi.v3.core.Jdbi;
+import java.sql.*;
 
 public class UserRepository {
-    private final Jdbi jdbi;
 
-    public UserRepository(Jdbi jdbi) {
-        this.jdbi = jdbi;
-    }
-
-    // Сохранить пользователя
+    // Сохранить или обновить пользователя
     public void save(PlayerStat player, String steamId) {
-        jdbi.useHandle(handle ->
-                handle.createUpdate(
-                                "INSERT INTO users (steam_id, username, avatar_url) " +
-                                        "VALUES (:steamId, :username, :avatarUrl) " +
-                                        "ON CONFLICT (steam_id) DO UPDATE " +
-                                        "SET username = :username, avatar_url = :avatarUrl"
-                        )
-                        .bind("steamId", steamId)
-                        .bind("username", player.getName())
-                        .bind("avatarUrl", player.getAvatar_link())
-                        .execute()
-        );
+        String sql = "INSERT INTO users (steam_id, username, avatar_url) " +
+                "VALUES (?, ?, ?) " +
+                "ON CONFLICT (steam_id) DO UPDATE " +
+                "SET username = EXCLUDED.username, avatar_url = EXCLUDED.avatar_url";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, steamId);
+            stmt.setString(2, player.getName());
+            stmt.setString(3, player.getAvatar_link());
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Проверить существует ли пользователь
     public boolean exists(String steamId) {
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT COUNT(*) FROM users WHERE steam_id = :steamId")
-                        .bind("steamId", steamId)
-                        .mapTo(Integer.class)
-                        .one() > 0
-        );
+        String sql = "SELECT COUNT(*) FROM users WHERE steam_id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, steamId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return rs.getInt(1) > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // Обновить время синхронизации
     public void updateLastSync(String steamId) {
-        jdbi.useHandle(handle ->
-                handle.createUpdate(
-                                "UPDATE users SET last_sync = NOW() WHERE steam_id = :steamId"
-                        )
-                        .bind("steamId", steamId)
-                        .execute()
-        );
+        String sql = "UPDATE users SET last_sync = NOW() WHERE steam_id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, steamId);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

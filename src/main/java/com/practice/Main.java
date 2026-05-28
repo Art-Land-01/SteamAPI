@@ -1,30 +1,52 @@
 package com.practice;
 
-import static com.practice.Database.getJDBI;
+import com.practice.Game;
+import com.practice.GameRepo;
+import com.practice.SteamAPI;
+import com.practice.WorkerBee;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            getJDBI().useHandle(handle -> handle.execute("Select 1"));
-            System.out.println("ok");
-        }
-        catch (Exception e){
-            System.out.println("not ok");
-        }
-        WorkerBee bee = new WorkerBee(new SteamAPI());
-        UserRepository userRepo = new UserRepository(Database.getJDBI());
-
         String steamId = "76561198145570899";
-        PlayerStat player = bee.getPlayer(steamId);
+        WorkerBee bee = new WorkerBee(new SteamAPI());
+        GameRepo gameRepo = new GameRepo();
 
-        userRepo.save(player, steamId);
-        System.out.println("Сохранён: " + userRepo.exists(steamId));
-        userRepo.updateLastSync(steamId);
+        // Строим индекс игр
+        bee.GameIDbyName(steamId);
+
+        // Ищем игру
+        List<Game> results = bee.searchGameByName("armored core");
+
+        if (results.isEmpty()) {
+            System.out.println("Игра не найдена");
+            return;
+        }
+
+        Game game = results.get(0);
+        System.out.println("Нашли: " + game.getGameName());
+
+        // Сохраняем
+        gameRepo.save(steamId, game);
+        System.out.println("Сохранена: " + game.getGameName());
+
+        // Проверяем
+        System.out.println("Отслеживается: " + gameRepo.isTracked(steamId, game.getGameID()));
+
+        // Список отслеживаемых
+        List<Game> tracked = gameRepo.getTrackedGames(steamId);
+        System.out.println("Всего отслеживается: " + tracked.size());
+        for (Game g : tracked) {
+            System.out.println(" - " + g.getGameName());
+        }
+
+        AchievementRepo ar = new AchievementRepo();
+        int appID = results.get(0).getGameID();
+        GameAchievements ach = bee.getAchievements(steamId,appID);
+        ar.saveAll(steamId,appID,ach);
+        System.out.println("Достижений - "+ach.getAchList().size());
+        System.out.println("Получено - "+ ar.countAchieved(steamId,appID));
+
     }
-
-
-        //AllGamesStat s = new AllGamesStat("76561198145570899");
-       // AllGamesStat.getGamesInfo("76561198145570899");
-
-
 }
