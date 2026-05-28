@@ -8,8 +8,21 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.HttpResponse;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 public class SteamAPI{
-    private static final String API_KEY = "CB76C482937B0AC695B62EBB16D3A64C";//в конфиг спрятать обязательно
+    private static final String API_KEY;
+    static {
+        Properties props = new Properties();
+        try(InputStream a = SteamAPI.class.getClassLoader().getResourceAsStream("config.properties")){
+            props.load(a);
+            API_KEY = ""+props.getProperty("api.key");
+        } catch (IOException e) {
+            throw new RuntimeException("not found",e);
+        }
+    }//в конфиг спрятать обязательно
     private static final String BASE_URL = "https://api.steampowered.com/";
     private static final CloseableHttpClient client = HttpClientBuilder.create().build();
     private static final ObjectMapper mapper = new ObjectMapper();

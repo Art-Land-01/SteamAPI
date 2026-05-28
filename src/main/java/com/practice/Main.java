@@ -18,7 +18,7 @@ public class Main {
         bee.GameIDbyName(steamId);
 
         // Ищем игру
-        List<Game> results = bee.searchGameByName("factorio");
+        List<Game> results = bee.searchGameByName("satisfactory");
 
         if (results.isEmpty()) {
             System.out.println("Игра не найдена");
