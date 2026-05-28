@@ -13,11 +13,12 @@ public class Main {
         WorkerBee bee = new WorkerBee(new SteamAPI());
         GameRepo gameRepo = new GameRepo();
 
+        bee.savePlayer(steamId);
         // Строим индекс игр
         bee.GameIDbyName(steamId);
 
         // Ищем игру
-        List<Game> results = bee.searchGameByName("armored core");
+        List<Game> results = bee.searchGameByName("factorio");
 
         if (results.isEmpty()) {
             System.out.println("Игра не найдена");
