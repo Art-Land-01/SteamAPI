@@ -6,10 +6,15 @@ import com.practice.SteamAPI;
 import com.practice.WorkerBee;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String steamId = "76561198145570899";
+        Scanner e = new Scanner(System.in);
+        String steamId = e.nextLine();
+        String searchGame = e.nextLine();
+
+
         WorkerBee bee = new WorkerBee(new SteamAPI());
         GameRepo gameRepo = new GameRepo();
 
@@ -18,7 +23,7 @@ public class Main {
         bee.GameIDbyName(steamId);
 
         // Ищем игру
-        List<Game> results = bee.searchGameByName("satisfactory");
+        List<Game> results = bee.searchGameByName(searchGame);
 
         if (results.isEmpty()) {
             System.out.println("Игра не найдена");
